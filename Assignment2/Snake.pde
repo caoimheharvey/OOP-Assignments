@@ -1,24 +1,26 @@
-//TO BE FIXED--DOESNT LOAD
-class Snake
+class Snake extends GameObject
 {
-  int cx, cy;
-  PVector forward; 
-  float theta = 0.0f;
   float speed = 5.0f;
-
+  int lives;
+  
   Snake()
   {
-    forward = new PVector(0, -1);
-    this.theta = 0.0f;
+  }
+  
+  Snake(int startX, int startY, char right, char left)
+  {
+    lives = 5;
   }
 
   void render()
   {
+    pushMatrix();
     beginShape(TRIANGLES);
     vertex(width * 0.5f, (height * 0.5f) - 30);
     vertex((width * 0.5f) - 10, (height * 0.5f) - 10);
     vertex((width * 0.5f) + 10, (height * 0.5f) - 10);
     endShape();
+    popMatrix();
   }
 
   void update()
@@ -26,31 +28,31 @@ class Snake
     forward.x = sin(theta);
     forward.y = - cos(theta);
 
-    // Move in the direction we are rotated
     forward.mult(speed);
     pos.add(forward);
 
 
-    if (pos.y - halfW < 0)
+    if (pos.y - height < 0)
     {
       theta = HALF_PI;
       pos.y = halfW;
     }
-    if (pos.x + halfW > width)
+    if (pos.x + width > width)
     {
       theta = PI;
       pos.x = width - halfW;
     }
-    if (pos.y + halfW > height)
+    if (pos.y > height)
     {
       theta = PI + HALF_PI;
       pos.y = height - halfW;
     }
-    if (pos.x < halfW)
+    if (pos.x < 0)
     {
       theta = 0;
       pos.x = halfW;
     }
   }
+  
 }
 

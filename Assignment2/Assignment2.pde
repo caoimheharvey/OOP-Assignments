@@ -9,12 +9,11 @@ DT282-2
 void setup()
 {
   size(700, 700);
-  grid_space = 20;
+  gap = 20;
 }
 
-int grid_space;
-int x = (int) random(0, width);
-int y = (int) random(0, height);
+int gap;
+
 
 void draw()
 {
@@ -22,7 +21,7 @@ void draw()
 
   //make grid
   stroke(50);
-  for (int i = grid_space; i <= width - grid_space; i += grid_space)
+  for (int i = gap; i <= width - gap; i += gap)
   {
     line(0, i, height, i);
     line(i, 0, i, width);

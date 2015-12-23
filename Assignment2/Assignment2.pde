@@ -10,10 +10,15 @@ void setup()
 {
   size(700, 700);
   gap = 20;
+  cx = width * 0.5f;
+  cy = height * 0.5f;
 }
 
-int gap;
+boolean[] keys = new boolean[512];
+float cx, cy;
+Snake snakes = new Snake(cx, cy, 'J', 'L');
 
+int gap;
 
 void draw()
 {
@@ -28,6 +33,7 @@ void draw()
   }
   stroke(255);
   
-  
+  snakes.render();
+  //snakes.update();
 }
 

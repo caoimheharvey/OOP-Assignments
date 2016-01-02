@@ -1,22 +1,25 @@
 /*
 Caoimhe Harvey
-C14724965
-OOP-Assignment 2
-DT282-2
-*/
+ C14724965
+ OOP-Assignment 2
+ DT282-2
+ */
 
 //snake game
 void setup()
 {
   size(700, 700);
+  Snake snakes = new Snake('I', 'J', 'K', 'L', width / 2, height / 2);
+  go.add(snakes);
   gap = 20;
-  cx = width * 0.5f;
-  cy = height * 0.5f;
+  x = width * 0.5f;
+  y = height * 0.5f;
 }
 
+ArrayList<GameObject> go = new ArrayList<GameObject>();
 boolean[] keys = new boolean[512];
-float cx, cy;
-Snake snakes = new Snake(cx, cy, 'J', 'L');
+float x, y;
+
 
 int gap;
 
@@ -32,8 +35,9 @@ void draw()
     line(i, 0, i, width);
   }
   stroke(255);
-  
-  snakes.render();
-  //snakes.update();
+  rect(x + 10, y - 10, 20, 20);
+ // go.render();
+ // go.update();
 }
+
 

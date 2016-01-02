@@ -8,11 +8,14 @@ class Snake extends GameObject
 
   Snake()
   {
+    //super(width * 0.5f, height  * 0.5f);
     this.x = x;
     this.y = y;
+    x = width * 0.5f;
+    y = height  * 0.5f;
   }
 
-  Snake(float startX, float startY, char right, char left)
+  Snake(char up, char left, char down, char right, float startX, float startY)
   {
     lives = 5;
     x = startX;
@@ -21,12 +24,10 @@ class Snake extends GameObject
 
   void render()
   {
+    x = width * 0.5f;
+    y = height  * 0.5f;
     pushMatrix();
-    beginShape(TRIANGLES);
-    vertex(x, y - 30);
-    vertex(x - 10, y - 10);
-    vertex(x + 10, y - 10);
-    endShape();
+    rect(x + 10, y - 10, 20, 20);
     popMatrix();
   }
 
@@ -34,24 +35,8 @@ class Snake extends GameObject
   {
     forward.x = sin(theta);
     forward.y = - cos(theta);
+    forward.mult(speed);
 
-    //forward.mult(speed);
-    /*
-     if (keys['I'])
-     {
-     pos.add(forward);
-     }   
-     */
-    //in hopes to make the snake move forward constantly with left and right as the 
-    //only directional options
-    pos.add(forward);
-    if (keys[left]) {
-      theta -= 0.1f;
-    }
-    if (keys[right])
-    {
-      theta += 0.1f;
-    }
 
     //code to get the screen to wrap
     if (pos.y - height < 0)

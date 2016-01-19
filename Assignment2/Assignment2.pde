@@ -6,14 +6,16 @@ Caoimhe Harvey
  */
 
 //snake game
+Snake snakes = new Snake();
+
 void setup()
 {
   size(500, 500);
-  sx = width / 2 + 10;
-  sy = height / 2 + 10;
+  startx = width / 2 + 10;
+  starty = height / 2 + 10;
 }
 
-int sx, sy; 
+int startx, starty; 
 int gap = 20; 
 
 void drawGrid()
@@ -26,10 +28,13 @@ void drawGrid()
   }
 }
 
+
 void draw()
 {
   background(0);
   drawGrid();
-  rect(sx, sy, 20, 20);
+  //rect(startx, starty, 20, 20);
+  snakes.update();
+  snakes.render();
 }
 

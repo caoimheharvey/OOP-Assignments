@@ -8,36 +8,28 @@ Caoimhe Harvey
 //snake game
 void setup()
 {
-  size(700, 700);
-  Snake snakes = new Snake('I', 'J', 'K', 'L', width / 2, height / 2);
-  go.add(snakes);
-  gap = 20;
-  x = width * 0.5f;
-  y = height * 0.5f;
+  size(500, 500);
+  sx = width / 2 + 10;
+  sy = height / 2 + 10;
 }
 
-ArrayList<GameObject> go = new ArrayList<GameObject>();
-boolean[] keys = new boolean[512];
-float x, y;
+int sx, sy; 
+int gap = 20; 
 
-
-int gap;
-
-void draw()
+void drawGrid()
 {
-  background(0);
-
-  //make grid
-  stroke(50);
-  for (int i = gap; i <= width - gap; i += gap)
+  stroke(70);
+  for (int i = gap; i <= height; i+= gap)
   {
     line(0, i, height, i);
     line(i, 0, i, width);
   }
-  stroke(255);
-  rect(x + 10, y - 10, 20, 20);
- // go.render();
- // go.update();
 }
 
+void draw()
+{
+  background(0);
+  drawGrid();
+  rect(sx, sy, 20, 20);
+}
 

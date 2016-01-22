@@ -13,20 +13,10 @@ class Human extends GameObject
 
   void update()
   {
-    pos.add(forward);
-
     if (keyPressed)
     {
       if (key == CODED)
       {
-        if (keyCode == UP )
-        {
-          pos.y -= 20;
-        }
-        if (keyCode == DOWN )
-        {
-          pos.y += 20;
-        }
         if (keyCode == LEFT )
         {
           pos.x -= 20;

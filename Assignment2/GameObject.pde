@@ -2,10 +2,13 @@ abstract class GameObject
 {
   boolean continues = true; 
   PVector forward; 
+  //speed for obstacles
+  float s;
   
   GameObject()
   {
-    forward = new PVector(1, 0);
+    s = 0.5f;
+    forward = new PVector(0, s);
   }
   
   abstract void render();

@@ -1,23 +1,20 @@
-class Snake extends GameObject
-{ 
-  int[] headx = new int[2000];
-  int[] heady = new int[2000];
-  PVector pos = new PVector(200, 300);
-  int snakelength;
-  Snake()
+class Human extends GameObject
+{
+  PVector pos;
+  Human(float x, float y)
   {
-    snakelength = 3;
+    pos = new PVector(width * 0.5f, 400);
   }
 
   void render()
-  {
+  {    
     rect(pos.x, pos.y, 20, 20);
   }
 
-   void update()
+  void update()
   {
     pos.add(forward);
-    
+
     if (keyPressed)
     {
       if (key == CODED)
@@ -41,6 +38,5 @@ class Snake extends GameObject
       }//end key == coded
     }//end key pressed
   }//end update
-  
 }
 

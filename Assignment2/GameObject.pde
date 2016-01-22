@@ -2,11 +2,10 @@ abstract class GameObject
 {
   boolean continues = true; 
   PVector forward; 
-  int angle;
   
   GameObject()
   {
-    forward = new PVector(0, -1);
+    forward = new PVector(1, 0);
   }
   
   abstract void render();

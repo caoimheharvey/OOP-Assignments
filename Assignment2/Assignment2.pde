@@ -5,18 +5,19 @@ Caoimhe Harvey
  DT282-2
  */
 
-//snake game
-Snake snakes = new Snake();
 
 void setup()
 {
   size(500, 500);
-  startx = width / 2 + 10;
-  starty = height / 2 + 10;
+  cx = width / 2;
+  cy = height / 2;
 }
 
-int startx, starty; 
+int cx, cy; 
 int gap = 20; 
+
+Human person = new Human(cx, cy);
+
 
 void drawGrid()
 {
@@ -33,8 +34,7 @@ void draw()
 {
   background(0);
   drawGrid();
-  //rect(startx, starty, 20, 20);
-  snakes.update();
-  snakes.render();
+  person.update();
+  person.render();
 }
 

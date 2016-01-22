@@ -14,10 +14,12 @@ void setup()
 }
 
 int cx, cy; 
-int gap = 20; 
+int gap = 10; 
+int  c =4; 
 
-Human person = new Human(cx, cy);
-
+ArrayList<GameObject> go = new ArrayList<GameObject>();
+GameObject person = new Human();
+GameObject obstacle = new Obstacles();
 
 void drawGrid()
 {
@@ -36,5 +38,21 @@ void draw()
   drawGrid();
   person.update();
   person.render();
+  obstacle.update();
+  obstacle.render();
+
+  checkCollision();
+  if (c == 4) 
+  {
+    go.add(new Obstacles());
+  }
+}
+
+void checkCollision()
+{
+  if (person.pos.x == obstacle.obst.x && person.pos.y == obstacle.obst.y)
+  {
+      println("Collision");
+  }
 }
 

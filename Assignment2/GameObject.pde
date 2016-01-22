@@ -4,11 +4,12 @@ abstract class GameObject
   PVector forward; 
   //speed for obstacles
   float s;
+  PVector pos;
+  PVector obst;
   
   GameObject()
   {
-    s = 0.5f;
-    forward = new PVector(0, s);
+   
   }
   
   abstract void render();

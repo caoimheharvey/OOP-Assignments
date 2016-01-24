@@ -9,17 +9,17 @@ Caoimhe Harvey
 void setup()
 {
   size(500, 500);
-  cx = width / 2;
-  cy = height / 2;
+  z = 10;//counter 
 }
 
-int cx, cy; 
+int x, y; 
 int gap = 10; 
-int  c =4; 
+int  colCount = 0; //counts the number of collisions
+int z; 
 
-ArrayList<GameObject> go = new ArrayList<GameObject>();
+ArrayList<Obstacles> obstacle = new ArrayList<Obstacles>();
 GameObject person = new Human();
-GameObject obstacle = new Obstacles();
+//GameObject obstacle;
 
 void drawGrid()
 {
@@ -38,21 +38,29 @@ void draw()
   drawGrid();
   person.update();
   person.render();
-  obstacle.update();
-  obstacle.render();
-
-  checkCollision();
-  if (c == 4) 
+ // obstacle.update();
+ // obstacle.render();
+int c = 4;
+if((frameCount % 10) == 0)
+{
+  obstacle.add(new Obstacles((int) round(random(100,400)), 10));
+}
+ // checkCollision();
+  if (colCount == z)
   {
-    go.add(new Obstacles());
+    //go.s += 1.0f;
+    z += 10;
   }
 }
-
+/*
 void checkCollision()
 {
-  if (person.pos.x == obstacle.obst.x && person.pos.y == obstacle.obst.y)
-  {
+  if (person.pos.x == obstacle.obst.x && person.pos.y == obstacle.obst.y) {
+    {
       println("Collision");
+      colCount ++;
+    }
   }
 }
+*/
 

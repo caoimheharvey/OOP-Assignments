@@ -9,7 +9,6 @@ abstract class GameObject
   
   GameObject()
   {
-   
   }
   
   abstract void render();

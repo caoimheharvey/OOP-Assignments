@@ -2,12 +2,10 @@ class LivesPU extends GameObject implements Powerup
 {
   int radius; 
   int p;
-  PVector move;
   PVector obj; 
   LivesPU()
   {
     radius = 15;
-    move = new PVector(0, -2);
     p = 30;
   }
 
@@ -19,16 +17,27 @@ class LivesPU extends GameObject implements Powerup
   void render()
   {
     pushMatrix();
-    //translate(obj.x, obst.y);
+    //translate(pos.x, pos.y);-- issues
     rotate(0.0f);
-    fill(255);
-    rect(- radius, - radius, p, p);
+    float lastX = 0; 
+    float lastY = - radius;
+    int sides = 5;
+    float thetaInc = TWO_PI / 5;
+    for (int i = 0; i <= 5; i ++)
+    {
+      float t = i * thetaInc;
+      float x = sin(t) * radius;
+      float y = -cos(t) * radius;
+      line(lastX, lastY, x, y);
+      lastX = x;
+      lastY = y;
+    }
     popMatrix();
   }
 
   void update()
   {
-    obj.add(move);
+    //pos.add(forward); -- issues
     println("POWER UPDATE");
   }
 }

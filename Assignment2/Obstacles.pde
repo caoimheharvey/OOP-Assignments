@@ -1,4 +1,4 @@
-class Obstacles extends GameObject
+class Obstacles extends GameObject implements Powerup
 {
   float startx;
   float starty;
@@ -14,7 +14,11 @@ class Obstacles extends GameObject
     s = 1.0f;
     forward = new PVector(0, s);
   }
-
+  
+  void applyTo(Human person)
+  {
+    person.lives --;
+  }
   void render()
   {
     println("RENDER");

@@ -21,7 +21,7 @@ class Obstacles extends GameObject
     stroke(255, 0, 0);
     fill(127);
     pushMatrix();
-    rect(obst.x, obst.y, w, w);
+      rect(obst.x, obst.y, w, w);
     popMatrix();
   }
 

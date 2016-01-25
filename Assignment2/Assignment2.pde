@@ -9,10 +9,9 @@ Caoimhe Harvey
 void setup()
 {
   size(500, 500);
-  z = 10;//counter
-
-  Obstacles obstacle = new Obstacles((int) round(random(50, 450)),
-  (int) round(random(50)));
+  z = 10;//counter for collisions
+  Obstacles obstacle = new Obstacles((int) round(random(50, 450)), 
+  (int) round(random(20, 70)));
   gameO.add(obstacle);
 }
 
@@ -23,7 +22,6 @@ int z;
 
 ArrayList<GameObject> gameO = new ArrayList<GameObject>();
 Human person = new Human();
-
 
 void drawGrid()
 {
@@ -39,18 +37,20 @@ void drawGrid()
 void draw()
 {
   background(0);
+  drawGrid();
+
+
   person.update();
   person.render();
-  //obstacle.update();
-  //obstacle.render();
 
+  boolean c = true;
+  boolean f = true;
 
   println("before");
-  if ((frameCount % 5) == 0)
+  if (c)
   {
+
     println("IN");
-    //obstacle = new Obstacles((int) round(random(100, 400)));
-    //go.add(obstacle);
     for (int i = gameO.size () - 1; i >= 0; i--)
     {
       GameObject go = gameO.get(i);
@@ -61,10 +61,13 @@ void draw()
   }
   println("after");
 
-  drawGrid();
 
-
-
+  if (frameCount % 60 == 0)
+  {
+    GameObject powerup = new LivesPU();
+     
+    gameO.add(powerup);
+  }
   // checkCollision();
   /*if (colCount == z)
    {

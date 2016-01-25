@@ -1,8 +1,11 @@
 class Human extends GameObject
 {
+  int lives;
+  
   Human()
   {
     pos = new PVector(260, 400);
+    lives = 5;
   }
 
   void render()

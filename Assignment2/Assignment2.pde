@@ -10,6 +10,10 @@ void setup()
 {
   size(500, 500);
   z = 10;//counter
+
+  Obstacles obstacle = new Obstacles((int) round(random(50, 450)),
+  (int) round(random(50)));
+  gameO.add(obstacle);
 }
 
 int x, y; 
@@ -17,9 +21,9 @@ int gap = 10;
 int  colCount = 0; //counts the number of collisions
 int z; 
 
-ArrayList<GameObject> go = new ArrayList<GameObject>();
+ArrayList<GameObject> gameO = new ArrayList<GameObject>();
 Human person = new Human();
-Obstacles obstacle;
+
 
 void drawGrid()
 {
@@ -35,30 +39,31 @@ void drawGrid()
 void draw()
 {
   background(0);
-  drawGrid();
   person.update();
   person.render();
   //obstacle.update();
   //obstacle.render();
 
 
- println("before");
+  println("before");
   if ((frameCount % 5) == 0)
   {
     println("IN");
-    obstacle = new Obstacles((int) round(random(100, 400)));
-    go.add(obstacle);
+    //obstacle = new Obstacles((int) round(random(100, 400)));
+    //go.add(obstacle);
+    for (int i = gameO.size () - 1; i >= 0; i--)
+    {
+      GameObject go = gameO.get(i);
+      go.update();
+      go.render();
+    }
     println("IN_LADER");
   }
   println("after");
-  
-  
-  for (int i = go.size () - 1; i >= 0; i--)
-  {
-    GameObject gameO = obstacle.get(i);
-    gameO.update();
-    gameO.render();
-  }
+
+  drawGrid();
+
+
 
   // checkCollision();
   /*if (colCount == z)

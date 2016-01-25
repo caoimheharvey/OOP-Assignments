@@ -5,13 +5,13 @@ abstract class GameObject
   //speed for obstacles
   float s;
   PVector pos;
-  PVector obst;
-  
+  int rad; 
+
   GameObject()
   {
   }
-  
+
   abstract void render();
   abstract void update();
-   
 }
+

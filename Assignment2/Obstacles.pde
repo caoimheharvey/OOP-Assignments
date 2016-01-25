@@ -6,33 +6,31 @@ class Obstacles extends GameObject implements Powerup
 
   Obstacles(int x, int w)
   {
-    println("OBSTACLE");
-
     this.w = w;
-
-    obst = new PVector(x, 10);
+    rad = w;
+    pos = new PVector(x, 10);
     s = 1.0f;
     forward = new PVector(0, s);
   }
-  
+
   void applyTo(Human person)
   {
     person.lives --;
   }
+  
   void render()
   {
-    println("RENDER");
     stroke(255, 0, 0);
     fill(127);
     pushMatrix();
-      rect(obst.x, obst.y, w, w);
+    rect(pos.x, pos.y, w, w);
     popMatrix();
   }
 
   void update()
   {
     println("UPDATE");
-    obst.add(forward);
+    pos.add(forward);
   }
 }
 

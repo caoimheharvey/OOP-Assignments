@@ -1,17 +1,17 @@
 class Human extends GameObject
 {
   int lives;
-  
   Human()
   {
     pos = new PVector(260, 400);
     lives = 5;
+    rad = 20;
   }
 
   void render()
   {    
     fill(255);
-    ellipse(pos.x, pos.y, 20, 20);
+    ellipse(pos.x, pos.y, rad, rad);
   }
 
   void update()

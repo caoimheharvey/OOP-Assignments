@@ -13,6 +13,8 @@ void setup()
   Obstacles obstacle = new Obstacles((int) round(random(50, 450)), 
   (int) round(random(20, 70)));
   gameO.add(obstacle);
+  Human person = new Human();
+  gameO.add(person);
 }
 
 int x, y; 
@@ -39,9 +41,8 @@ void draw()
   background(0);
   drawGrid();
 
-
-  person.update();
-  person.render();
+  //  person.update();
+  //  person.render();
 
   boolean c = true;
   boolean f = true;
@@ -65,23 +66,44 @@ void draw()
   if (frameCount % 60 == 0)
   {
     GameObject powerup = new LivesPU();
-     
+
     gameO.add(powerup);
   }
-  // checkCollision();
-  /*if (colCount == z)
-   {
-   z += 10;
-   }*/
+  checkCollision();
+  if (colCount == z)
+  {
+    z += 10;
+  }
 }
-/*
+
 void checkCollision()
- {
- if (person.pos.x == obstacle.obst.x && person.pos.y == obstacle.obst.y) {
- {
- println("Collision");
- colCount ++;
- }
- }
- }
- */
+{
+  for (int i = gameO.size () - 1; i >= 0; i --)
+  {
+    println("in for loop1");
+    GameObject go = gameO.get(i);
+    if (go instanceof Human)
+    {
+      println("in if1");
+      for (int j = gameO.size () - 1; j >= 0; j --)
+      {
+        println("in for loop2");
+        GameObject other = gameO.get(j);
+        if (other instanceof Obstacles) // Check the type of a object
+        {
+          println("in if2");
+          // Bounding circle collisions
+          if (go.pos.dist(other.pos) < go.rad + other.rad)
+          {
+            println("in if3");
+            // Do some casting
+            ((Obstacles) other).applyTo((Human)go);
+            gameO.remove(other);
+            println("Collision");
+          }
+        }
+      }
+    }
+  }
+}
+

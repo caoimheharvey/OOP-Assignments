@@ -37,8 +37,8 @@ class LivesPU extends GameObject implements Powerup
 
   void update()
   {
-    //pos.add(forward); -- issues
-    println("POWER UPDATE");
+    //pos.add(forward);
+    //println("POWER UPDATE");
   }
 }
 

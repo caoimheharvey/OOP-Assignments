@@ -9,7 +9,7 @@ Caoimhe Harvey
 void setup()
 {
   size(500, 500);
-  z = 10;//counter 
+  z = 10;//counter
 }
 
 int x, y; 
@@ -17,9 +17,9 @@ int gap = 10;
 int  colCount = 0; //counts the number of collisions
 int z; 
 
-ArrayList<Obstacles> obstacle = new ArrayList<Obstacles>();
-GameObject person = new Human();
-//GameObject obstacle;
+ArrayList<GameObject> go = new ArrayList<GameObject>();
+Human person = new Human();
+Obstacles obstacle;
 
 void drawGrid()
 {
@@ -38,29 +38,42 @@ void draw()
   drawGrid();
   person.update();
   person.render();
- // obstacle.update();
- // obstacle.render();
-int c = 4;
-if((frameCount % 10) == 0)
-{
-  obstacle.add(new Obstacles((int) round(random(100,400)), 10));
-}
- // checkCollision();
-  if (colCount == z)
+  //obstacle.update();
+  //obstacle.render();
+
+
+ println("before");
+  if ((frameCount % 5) == 0)
   {
-    //go.s += 1.0f;
-    z += 10;
+    println("IN");
+    obstacle = new Obstacles((int) round(random(100, 400)));
+    go.add(obstacle);
+    println("IN_LADER");
   }
+  println("after");
+  
+  
+  for (int i = go.size () - 1; i >= 0; i--)
+  {
+    GameObject gameO = obstacle.get(i);
+    gameO.update();
+    gameO.render();
+  }
+
+  // checkCollision();
+  /*if (colCount == z)
+   {
+   z += 10;
+   }*/
 }
 /*
 void checkCollision()
-{
-  if (person.pos.x == obstacle.obst.x && person.pos.y == obstacle.obst.y) {
-    {
-      println("Collision");
-      colCount ++;
-    }
-  }
-}
-*/
-
+ {
+ if (person.pos.x == obstacle.obst.x && person.pos.y == obstacle.obst.y) {
+ {
+ println("Collision");
+ colCount ++;
+ }
+ }
+ }
+ */

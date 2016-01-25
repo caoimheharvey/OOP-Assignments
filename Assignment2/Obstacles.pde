@@ -3,20 +3,21 @@ class Obstacles extends GameObject
   float startx;
   float starty;
 
-  Obstacles(int x, int y)
+  Obstacles()
   {
-    starty = random(10);
-    startx = random(100, 400);
-    obst = new PVector(300, 10);
+  }
+
+  Obstacles(int x)
+  {
+    println("OBSTACLE");
+    obst = new PVector(x, 10);
     s = 1.0f;
     forward = new PVector(0, s);
- 
-    obst.x = x;
-    obst.y = y;
   }
 
   void render()
   {
+    println("RENDER");
     stroke(255, 0, 0);
     fill(255, 0, 0);
     pushMatrix();
@@ -26,6 +27,7 @@ class Obstacles extends GameObject
 
   void update()
   {
+    println("UPDATE");
     obst.add(forward);
   }
 }

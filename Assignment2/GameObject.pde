@@ -1,4 +1,4 @@
-abstract class GameObject
+class GameObject
 {
   boolean continues = true; 
   PVector forward; 
@@ -12,7 +12,7 @@ abstract class GameObject
    
   }
   
-  abstract void render();
-  
-  abstract void update();
+   void render(){}
+   void update(){}
+   
 }

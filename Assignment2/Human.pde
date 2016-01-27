@@ -28,14 +28,9 @@ class Human extends GameObject
         {
           pos.x += 10;
         }
-        if (keyCode == SHIFT)
-        {
-          //firing bullets
-
-        }
       }//end key == coded
     }//end key pressed
-
+//wraps around
     if (pos.x < 0)
     {
       pos.x = width;

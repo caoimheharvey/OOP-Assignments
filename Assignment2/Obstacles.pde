@@ -29,7 +29,6 @@ class Obstacles extends GameObject implements Powerup
 
   void update()
   {
-    println("UPDATE");
     pos.add(forward);
   }
 }

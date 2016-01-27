@@ -15,7 +15,7 @@ class LivesPU extends GameObject implements Powerup
   }
 
   void render()
-  {
+  { //use a circle for now
     pushMatrix();
     //translate(pos.x, pos.y);-- issues
     rotate(0.0f);
@@ -36,7 +36,7 @@ class LivesPU extends GameObject implements Powerup
   }
 
   void update()
-  {
+  {//not working
     //pos.add(forward);
     //println("POWER UPDATE");
   }

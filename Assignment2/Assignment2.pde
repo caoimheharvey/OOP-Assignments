@@ -8,48 +8,43 @@ Caoimhe Harvey
 
 void setup()
 {
-  size(500, 500);
+  size(500, 700);
   z = 10;//counter for collisions
-  Obstacles obstacle = new Obstacles((int) round(random(50, 450)), 
-  (int) round(random(20, 70)));
-  gameO.add(obstacle);
-
   Human person = new Human();
   gameO.add(person);
+  speed = 1.0f;
 }
 
 int x, y; 
 int gap = 10; 
-int  colCount = 0; //counts the number of collisions
+int colCount = 0; //counts the number of collisions
 int z; 
+float bw = 0; //border width
+float speed;
 
 ArrayList<GameObject> gameO = new ArrayList<GameObject>();
-//Human person = new Human();
-
-void drawGrid()
-{
-  stroke(70);
-  for (int i = gap; i <= height; i+= gap)
-  {
-    line(0, i, height, i);
-    line(i, 0, i, width);
-  }
-}
-
 
 void draw()
 {
   background(0);
-  drawGrid();
-
-  //  person.update();
-  //  person.render();
+  
   if (frameCount % 60 == 0)
   {
-    Obstacles x = new Obstacles((int) round(random(50, 450)), 
-    (int) round(random(20, 70)));
-    gameO.add(x);
+    switch((int) random(0, 3))
+    {
+    case 0:
+    case 1:
+      Obstacles obstacle = new Obstacles((int) round(random(50, 450)), 
+      (int) round(random(20, 70)), speed);
+      gameO.add(obstacle);
+      break;
+     case 2:
+     GameObject powerup = new LivesPU((int) round(random(50, 450)));   
+    gameO.add(powerup);
+    }
   }
+  
+  
   for (int i = gameO.size () - 1; i >= 0; i--)
   {
     GameObject go = gameO.get(i);
@@ -58,19 +53,18 @@ void draw()
   }
 
 
-  /*
-  if (frameCount % 60 == 0)
-   {
-   GameObject powerup = new LivesPU();
-   
-   gameO.add(powerup);
-   }
-   */
+//Collision related code ---------
   checkCollision();
-
-  if (colCount == z)
+  
+  //incrementing border size
+  if(colCount == z)
   {
-    z += 10;
+    if(bw <= 30)
+    {
+      bw *= 0.5f;
+      z += 10;
+      speed += 0.5f;
+    }
   }
 }
 
@@ -84,12 +78,13 @@ void checkCollision()
       for (int j = gameO.size () - 1; j >= 0; j --)
       {
         GameObject other = gameO.get(j);
-        if (other instanceof Obstacles) 
+        if (other instanceof Powerup) 
         {
           if (go.pos.dist(other.pos) < go.rad + other.rad)
           {
-            ((Obstacles) other).applyTo((Human)go);
+            ((Powerup) other).applyTo((Human)go);
             gameO.remove(other);
+            colCount++;
           }
         }
       }

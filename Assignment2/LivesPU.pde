@@ -1,12 +1,12 @@
 class LivesPU extends GameObject implements Powerup
 {
-  int radius; 
   int p;
   PVector obj; 
-  LivesPU()
+  LivesPU(int x)
   {
-    radius = 15;
-    p = 30;
+    pos = new PVector(x, 10);
+    rad = 15;
+    forward = new PVector(0, 1);
   }
 
   void applyTo(Human person)
@@ -17,28 +17,13 @@ class LivesPU extends GameObject implements Powerup
   void render()
   { //use a circle for now
     pushMatrix();
-    //translate(pos.x, pos.y);-- issues
-    rotate(0.0f);
-    float lastX = 0; 
-    float lastY = - radius;
-    int sides = 5;
-    float thetaInc = TWO_PI / 5;
-    for (int i = 0; i <= 5; i ++)
-    {
-      float t = i * thetaInc;
-      float x = sin(t) * radius;
-      float y = -cos(t) * radius;
-      line(lastX, lastY, x, y);
-      lastX = x;
-      lastY = y;
-    }
+    ellipse(pos.x, pos.y, rad, rad);
     popMatrix();
   }
 
   void update()
   {//not working
-    //pos.add(forward);
-    //println("POWER UPDATE");
+    pos.add(forward);
   }
 }
 

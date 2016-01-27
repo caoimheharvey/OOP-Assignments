@@ -3,7 +3,7 @@ class Human extends GameObject
   int lives;
   Human()
   {
-    pos = new PVector(260, 400);
+    pos = new PVector(260, 500);
     lives = 5;
     rad = 20;
   }

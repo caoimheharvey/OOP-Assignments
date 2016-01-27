@@ -1,15 +1,12 @@
 class Obstacles extends GameObject implements Powerup
 {
-  float startx;
-  float starty;
   int w;
 
-  Obstacles(int x, int w)
+  Obstacles(int x, int w, float s)
   {
     this.w = w;
     rad = w;
     pos = new PVector(x, 10);
-    s = 1.0f;
     forward = new PVector(0, s);
   }
 
@@ -23,7 +20,7 @@ class Obstacles extends GameObject implements Powerup
     stroke(255, 0, 0);
     fill(127);
     pushMatrix();
-    rect(pos.x, pos.y, w, w);
+    rect(pos.x, pos.y, w, w, 5);
     popMatrix();
   }
 

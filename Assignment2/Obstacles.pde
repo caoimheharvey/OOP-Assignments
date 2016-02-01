@@ -6,7 +6,7 @@ class Obstacles extends GameObject implements Powerup
   {
     this.w = w;
     rad = w;
-    pos = new PVector(x, 10);
+    pos = new PVector(x, -15);
     forward = new PVector(0, s);
   }
 

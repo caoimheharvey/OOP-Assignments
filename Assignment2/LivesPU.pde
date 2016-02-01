@@ -1,11 +1,9 @@
 class LivesPU extends GameObject implements Powerup
 {
-  int p;
-  PVector obj; 
   LivesPU(int x)
   {
-    pos = new PVector(x, 10);
-    rad = 15;
+    pos = new PVector(x, -15);
+    rad = 30;
     forward = new PVector(0, 1);
   }
 
@@ -16,13 +14,15 @@ class LivesPU extends GameObject implements Powerup
 
   void render()
   { //use a circle for now
+    stroke(255);
+    fill(255,204,153);
     pushMatrix();
     ellipse(pos.x, pos.y, rad, rad);
     popMatrix();
   }
 
   void update()
-  {//not working
+  {
     pos.add(forward);
   }
 }

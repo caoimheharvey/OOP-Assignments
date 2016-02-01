@@ -15,11 +15,10 @@ void setup()
   speed = 1.0f;
 }
 
-int x, y; 
-int gap = 10; 
+int x; 
 int colCount = 0; //counts the number of collisions
 int z; 
-float bw = 0; //border width
+float bw = 0.1f; //border width
 float speed;
 
 ArrayList<GameObject> gameO = new ArrayList<GameObject>();
@@ -27,10 +26,11 @@ ArrayList<GameObject> gameO = new ArrayList<GameObject>();
 void draw()
 {
   background(0);
-  
+
+//FOR EVERY 60 SECOND DISPLAY NEW OBJECT
   if (frameCount % 60 == 0)
   {
-    switch((int) random(0, 3))
+    switch((int) random(0, 5))
     {
     case 0:
     case 1:
@@ -38,13 +38,20 @@ void draw()
       (int) round(random(20, 70)), speed);
       gameO.add(obstacle);
       break;
-     case 2:
-     GameObject powerup = new LivesPU((int) round(random(50, 450)));   
-    gameO.add(powerup);
+    case 2:
+      GameObject powerup = new LivesPU((int) round(random(50, 450)));   
+      gameO.add(powerup);
+      break;
+    case 3: 
+    case 4:
+      fill(255, 153, 153);
+
+      GameObject collection = new Collect((int) round(random(50, 450)));
+      gameO.add(collection);
     }
   }
-  
-  
+
+//DISPLAYING THE GAME --------------------------------------------------------------
   for (int i = gameO.size () - 1; i >= 0; i--)
   {
     GameObject go = gameO.get(i);
@@ -53,13 +60,13 @@ void draw()
   }
 
 
-//Collision related code ---------
+  //Collision related code ---------------------------------------------------------
   checkCollision();
-  
+
   //incrementing border size
-  if(colCount == z)
+  if (colCount == z)
   {
-    if(bw <= 30)
+    if (bw <= 30)
     {
       bw *= 0.5f;
       z += 10;

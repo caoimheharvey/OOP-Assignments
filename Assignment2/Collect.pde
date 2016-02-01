@@ -10,6 +10,7 @@ class Collect extends GameObject implements Powerup
     forward = new PVector(0, 2);
     thetaDir = random(-0.2f, 0.2f);
     theta = 0.0f;
+    rad = 20;
   }
 
   void applyTo(Human person)
@@ -19,7 +20,7 @@ class Collect extends GameObject implements Powerup
 
   void render()
   {
-    fill(255, 153, 153);
+    stroke(255, 153, 153);
     pushMatrix();
     translate(pos.x, pos.y);
     rotate(theta);
@@ -30,8 +31,8 @@ class Collect extends GameObject implements Powerup
     for (int i = 0; i <= sides; i ++)
     {
       float t = i * thetaInc;
-      float x = sin(t) * 4;
-      float y = -cos(t) * 4;
+      float x = sin(t) * rad;
+      float y = -cos(t) * rad;
       line(lastX, lastY, x, y);
       lastX = x;
       lastY = y;

@@ -15,7 +15,7 @@ class LivesPU extends GameObject implements Powerup
   void render()
   { //use a circle for now
     stroke(255);
-    fill(255,204,153);
+    fill(255,253,93);
     pushMatrix();
     ellipse(pos.x, pos.y, rad, rad);
     popMatrix();

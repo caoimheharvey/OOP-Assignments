@@ -20,7 +20,7 @@ class Collect extends GameObject implements Powerup
 
   void render()
   {
-    stroke(255, 153, 153);
+    stroke(102,255,255);
     pushMatrix();
     translate(pos.x, pos.y);
     rotate(theta);

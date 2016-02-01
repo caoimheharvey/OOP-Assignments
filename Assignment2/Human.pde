@@ -12,6 +12,7 @@ class Human extends GameObject
 
   void render()
   {    
+    stroke(0);
     fill(255);
     ellipse(pos.x, pos.y, rad, rad);
   }

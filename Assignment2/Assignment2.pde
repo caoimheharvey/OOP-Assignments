@@ -13,21 +13,29 @@ void setup()
   Human person = new Human();
   gameO.add(person);
   speed = 1.0f;
+  c = color(27, 83, 132);
+  bw = 0.0f;
 }
-
+int c; //background color in draw
 int x; 
 int colCount = 0; //counts the number of collisions
 int z; 
-float bw = 0.1f; //border width
+float bw; //border width
 float speed;
 
 ArrayList<GameObject> gameO = new ArrayList<GameObject>();
 
 void draw()
 {
+  //BACKGROUND CODE -------------------------------------------------------------------
   background(0);
+  //right side
+  fill(255);
+  rect(0, 0, (width * bw), height);
+  //left
+  rect(width, 0, -(width * bw), height);
 
-//FOR EVERY 60 SECOND DISPLAY NEW OBJECT
+  //FOR EVERY 60 SECOND DISPLAY NEW OBJECT ----------------------------------------------
   if (frameCount % 60 == 0)
   {
     switch((int) random(0, 5))
@@ -44,14 +52,12 @@ void draw()
       break;
     case 3: 
     case 4:
-      fill(255, 153, 153);
-
       GameObject collection = new Collect((int) round(random(50, 450)));
       gameO.add(collection);
     }
   }
 
-//DISPLAYING THE GAME --------------------------------------------------------------
+  //DISPLAYING THE GAME --------------------------------------------------------------
   for (int i = gameO.size () - 1; i >= 0; i--)
   {
     GameObject go = gameO.get(i);
@@ -66,11 +72,11 @@ void draw()
   //incrementing border size
   if (colCount == z)
   {
-    if (bw <= 30)
+    z += 10;
+    speed += 0.5f;
+    if (bw <= 0.25f)
     {
-      bw *= 0.5f;
-      z += 10;
-      speed += 0.5f;
+      bw += 0.05f;
     }
   }
 }
@@ -79,17 +85,17 @@ void checkCollision()
 {
   for (int i = gameO.size () - 1; i >= 0; i --)
   {
-    GameObject go = gameO.get(i);
-    if (go instanceof Human)
+    GameObject h = gameO.get(i);
+    if (h instanceof Human)
     {
       for (int j = gameO.size () - 1; j >= 0; j --)
       {
         GameObject other = gameO.get(j);
         if (other instanceof Powerup) 
         {
-          if (go.pos.dist(other.pos) < go.rad + other.rad)
+          if (h.pos.dist(other.pos) < h.rad + other.rad)
           {
-            ((Powerup) other).applyTo((Human)go);
+            ((Powerup) other).applyTo((Human)h);
             gameO.remove(other);
             colCount++;
           }
@@ -97,5 +103,14 @@ void checkCollision()
       }
     }
   }
+}
+
+
+void startscreen()
+{
+}
+
+void endscreen()
+{
 }
 

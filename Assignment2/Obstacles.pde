@@ -14,11 +14,12 @@ class Obstacles extends GameObject implements Powerup
   {
     person.lives --;
   }
-  
+
   void render()
   {
-    stroke(255, 0, 0);
-    fill(127);
+    //noStroke();
+    stroke(255,0,0);
+    fill(70);
     pushMatrix();
     rect(pos.x, pos.y, w, w, 5);
     popMatrix();

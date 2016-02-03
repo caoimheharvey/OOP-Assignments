@@ -15,9 +15,10 @@ void setup()
   speed = 1.0f;
   c = color(27, 83, 132);
   bgap = 0.0f;
+  toggled = true;
 }
 
-
+boolean toggled; 
 int c; //background color in draw
 int x; 
 int colCount = 0; //counts the number of collisions
@@ -36,14 +37,19 @@ void draw()
 
   //MENU ------------------------------------------------------------------------------
 
+  //use bool to toggle game play until the end screen is displayed. 
+  //if toggled = true then display start screen until SHIFT is pressed
+  //when SHIFT is pressed set toggled to false then user plays game
+  //when users lives == 0 then display the end screen (might need a second bool)
 
   //right side
   fill(40, 196, 64);
-  rect(0, 0, width * bgap, height);
+  rect(0, 0, bw, height);
   //left
-  rect(width, 0, - width * bgap, height);
+  rect(width, 0, - bw, height);
 
   bw = width * bgap;
+
   //FOR EVERY 60 SECOND DISPLAY NEW OBJECT ----------------------------------------------
   if (frameCount % 60 == 0)
   {
@@ -185,5 +191,6 @@ void displayGameInfo()
 {
   fill(255);
   rect(-2, -2, width + 5, height * 0.1f);
+  //add text with details with user stats
 }
 

@@ -33,7 +33,7 @@ class Human extends GameObject
         }
       }//end key == coded
     }//end key pressed
-//wraps around
+/*wraps around
     if (pos.x < 0)
     {
       pos.x = width;
@@ -43,6 +43,7 @@ class Human extends GameObject
     {
       pos.x = 0;
     }
+    */
   }//end update
 }
 

@@ -16,9 +16,11 @@ void setup()
   c = color(27, 83, 132);
   bgap = 0.0f;
   toggled = true;
+  endToggled = false;
 }
 
 boolean toggled; 
+boolean endToggled; 
 int c; //background color in draw
 int x; 
 int colCount = 0; //counts the number of collisions
@@ -33,69 +35,96 @@ ArrayList<GameObject> gameO = new ArrayList<GameObject>();
 void draw()
 {
   //BACKGROUND CODE -------------------------------------------------------------------
+  //create lightning and darkening background of blue
   background(c);
 
   //MENU ------------------------------------------------------------------------------
-
   //use bool to toggle game play until the end screen is displayed. 
   //if toggled = true then display start screen until SHIFT is pressed
   //when SHIFT is pressed set toggled to false then user plays game
-  //when users lives == 0 then display the end screen (might need a second bool)
-
-  //right side
-  fill(40, 196, 64);
-  rect(0, 0, bw, height);
-  //left
-  rect(width, 0, - bw, height);
-
-  bw = width * bgap;
-
-  //FOR EVERY 60 SECOND DISPLAY NEW OBJECT ----------------------------------------------
-  if (frameCount % 60 == 0)
+  //when users lives == 0 then display the end screen (use second bool)
+  if (toggled)
   {
-    switch((int) random(0, 5))
+    startScreen();
+    if (keyPressed)
     {
-    case 0:
-    case 1:
-    case 2:
-      Obstacles obstacle = new Obstacles((int) round(random(bw, width - bw - 70)), 
-      (int) round(random(20, 70)), speed);
-      gameO.add(obstacle);
-      break;
-    case 3:
-      GameObject powerup = new LivesPU((int) round(random(bw, width - bw)));   
-      gameO.add(powerup);
-      break;
-    case 4: 
-      GameObject collection = new Collect((int) round(random(bw, width - bw)));
-      gameO.add(collection);
+      if (key == CODED)
+      {
+        if (keyCode == SHIFT) 
+        {
+          toggled =! toggled;
+        }
+      }
     }
+  } else
+  {
+
+    //right side
+    fill(40, 196, 64);
+    rect(0, 0, bw, height);
+    //left
+    rect(width, 0, - bw, height);
+
+    bw = width * bgap;
+
+    //FOR EVERY 60 SECOND DISPLAY NEW OBJECT ----------------------------------------------
+    if (frameCount % 60 == 0)
+    {
+      switch((int) random(0, 5))
+      {
+      case 0:
+      case 1:
+      case 2:
+        Obstacles obstacle = new Obstacles((int) round(random(bw, width - bw - 70)), 
+        (int) round(random(20, 70)), speed);
+        gameO.add(obstacle);
+        break;
+      case 3:
+        GameObject powerup = new LivesPU((int) round(random(bw, width - bw)));   
+        gameO.add(powerup);
+        break;
+      case 4: 
+        GameObject collection = new Collect((int) round(random(bw, width - bw)));
+        gameO.add(collection);
+      }
+    }
+
+    //DISPLAYING THE GAME --------------------------------------------------------------
+    for (int i = gameO.size () - 1; i >= 0; i--)
+    {
+      GameObject go = gameO.get(i);
+      go.update();
+      go.render();
+    } 
+    displayGameInfo();
+
+    //COLLISION RELATED CODE ---------------------------------------------------------
+    checkCollision();
+    checkBorders();
+
+    //incrementing border size
+    if (colCount == z)
+    {
+      z += 10;
+      speed += 0.5f;
+      if (bgap <= 0.2f)
+      {
+        bgap += 0.05f;
+      }
+    }
+    /*
+    if(//condition)
+    {
+      endToggled = true;
+    }
+    */
   }
-
-  //DISPLAYING THE GAME --------------------------------------------------------------
-  for (int i = gameO.size () - 1; i >= 0; i--)
+  if(endToggled)
   {
-    GameObject go = gameO.get(i);
-    go.update();
-    go.render();
-  } 
-  displayGameInfo();
-
-  //COLLISION RELATED CODE ---------------------------------------------------------
-  checkCollision();
-  checkBorders();
-
-  //incrementing border size
-  if (colCount == z)
-  {
-    z += 10;
-    speed += 0.5f;
-    if (bgap <= 0.2f)
-    {
-      bgap += 0.05f;
-    }
+    endScreen();
   }
 }
+
 
 
 void checkCollision()
@@ -151,9 +180,8 @@ void startScreen()
   ellipse(width * 0.35f, height * 0.5f, 20, 20);
   text("This is you", width * 0.45f, height * 0.5f);
 
-  int r = (int) random(10, 50);
   //what do i dodge
-  rect(width * 0.3f, height * 0.55f, r, r );
+  rect(width * 0.3f, height * 0.55f, 40, 40 );
   text("You avoid these", width * 0.45f, height * 0.55f);
 
   //lives
@@ -174,10 +202,10 @@ void startScreen()
   //draw rectangles for grass
   noStroke();
   fill(40, 196, 64);
-  rect(0, 0, - width * 0.15f, height);
+  rect(0, 0,  width * 0.15f, height);
   rect(width, 0, - width * 0.15f, height);
-  text("<----- If you hit these you're out of bounds and lose 1 life ----->", 
-  width / 2, height * 0.7f);
+  text("<----- If you hit these you're\nout of bounds and lose 1 life ----->", 
+  width - 375, height * 0.8f);
 
   //how do i start
   text("To START press SHIFT", width / 2, height - 200);

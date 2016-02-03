@@ -3,8 +3,8 @@ class LivesPU extends GameObject implements Powerup
   LivesPU(int x)
   {
     pos = new PVector(x, -15);
-    rad = 30;
-    forward = new PVector(0, 1);
+    rad = 20;
+    forward = new PVector(0, 3);
   }
 
   void applyTo(Human person)
@@ -14,10 +14,12 @@ class LivesPU extends GameObject implements Powerup
 
   void render()
   { //use a circle for now
-    stroke(255);
-    fill(255,253,93);
+    noStroke();
+    fill(255, 253, 93);
     pushMatrix();
-    ellipse(pos.x, pos.y, rad, rad);
+    rect(pos.x, pos.y, rad, rad + 10);
+    triangle(pos.x - 15, pos.y, pos.x + (rad /2), pos.y - rad, pos.x + (rad + 15), pos.y);
+    
     popMatrix();
   }
 

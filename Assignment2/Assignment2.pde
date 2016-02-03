@@ -33,6 +33,10 @@ void draw()
 {
   //BACKGROUND CODE -------------------------------------------------------------------
   background(c);
+
+  //MENU ------------------------------------------------------------------------------
+
+
   //right side
   fill(40, 196, 64);
   rect(0, 0, width * bgap, height);
@@ -69,8 +73,9 @@ void draw()
     go.update();
     go.render();
   } 
+  displayGameInfo();
 
-  //Collision related code ---------------------------------------------------------
+  //COLLISION RELATED CODE ---------------------------------------------------------
   checkCollision();
   checkBorders();
 
@@ -85,6 +90,7 @@ void draw()
     }
   }
 }
+
 
 void checkCollision()
 {
@@ -119,20 +125,65 @@ void checkCollision()
 void checkBorders()
 {
   GameObject pers = new Human();
-  if (pers.pos.x < bw || pers.pos.x > -(bw))
+  if (pers.pos.x < width * 0.1f || pers.pos.x > width - (width * 0.1f))
   { 
-    //println("OUT OF BOUNDS");
+    println("OUT OF BOUNDS");
   } else 
   {
-    //println(" ");
+    println("IN BOUNDS");
   }
 }
 
-void startscreen()
+void startScreen()
+{
+  //title
+  textSize(32);
+  text("Dodge 'Em", width * 0.35f, height * 0.35f);
+  textSize(14);
+
+  //who am i and how do i move
+  ellipse(width * 0.35f, height * 0.5f, 20, 20);
+  text("This is you", width * 0.45f, height * 0.5f);
+
+  int r = (int) random(10, 50);
+  //what do i dodge
+  rect(width * 0.3f, height * 0.55f, r, r );
+  text("You avoid these", width * 0.45f, height * 0.55f);
+
+  //lives
+  float px = width * 0.3f;
+  float py = height * 0.6f;
+  pushMatrix();
+  rect(px, py, 20, 30);
+  triangle(px - 15, py, px + 10, py - 20, px + 35, py);
+  popMatrix(); 
+  text("These give you more lives", px, py);
+  /*
+   //collecting points
+   pushMatrix();
+   popMatrix(); 
+   text("These speed you up");
+   */
+
+  //draw rectangles for grass
+  noStroke();
+  fill(40, 196, 64);
+  rect(0, 0, - width * 0.15f, height);
+  rect(width, 0, - width * 0.15f, height);
+  text("<----- If you hit these you're out of bounds and lose 1 life ----->", 
+  width / 2, height * 0.7f);
+
+  //how do i start
+  text("To START press SHIFT", width / 2, height - 200);
+}
+
+void endScreen()
 {
 }
 
-void endscreen()
+void displayGameInfo()
 {
+  fill(255);
+  rect(-2, -2, width + 5, height * 0.1f);
 }
 

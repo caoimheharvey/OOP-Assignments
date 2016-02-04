@@ -101,7 +101,7 @@ void draw()
     //COLLISION RELATED CODE ---------------------------------------------------------
     checkCollision();
     checkBorders();
-
+    livesCheck();
     //incrementing border size
     if (colCount == z)
     {
@@ -113,13 +113,13 @@ void draw()
       }
     }
     /*
-    if(//condition)
-    {
-      endToggled = true;
-    }
-    */
+    if(gameO.lives == 0)
+     {
+     endToggled = true;
+     }
+     */
   }
-  if(endToggled)
+  if (endToggled)
   {
     endScreen();
   }
@@ -142,7 +142,6 @@ void checkCollision()
           if (h.pos.dist(other.pos) < h.rad + other.rad)
           {
             if (other.pos.y > 510) {
-              println("nada");
             } else
             {
               ((Powerup) other).applyTo((Human)h);
@@ -162,10 +161,10 @@ void checkBorders()
   GameObject pers = new Human();
   if (pers.pos.x < width * 0.1f || pers.pos.x > width - (width * 0.1f))
   { 
-    println("OUT OF BOUNDS");
+   // println("OUT OF BOUNDS");
   } else 
   {
-    println("IN BOUNDS");
+    //println("IN BOUNDS");
   }
 }
 
@@ -177,21 +176,21 @@ void startScreen()
   textSize(14);
 
   //who am i and how do i move
-  ellipse(width * 0.35f, height * 0.5f, 20, 20);
+  ellipse(width * 0.35f - 15, height * 0.5f, 20, 20);
   text("This is you", width * 0.45f, height * 0.5f);
 
   //what do i dodge
-  rect(width * 0.3f, height * 0.55f, 40, 40 );
-  text("You avoid these", width * 0.45f, height * 0.55f);
+  rect(width * 0.3f - 10, height * 0.55f - 10, 40, 40 );
+  text("You avoid these", width * 0.45f, height * 0.55f + 20);
 
   //lives
   float px = width * 0.3f;
   float py = height * 0.6f;
   pushMatrix();
-  rect(px, py, 20, 30);
-  triangle(px - 15, py, px + 10, py - 20, px + 35, py);
+  rect(px, py + 35, 20, 30);
+  triangle(px - 15, py + 35, px + 10, py - 20  + 35, px + 35, py  +35);
   popMatrix(); 
-  text("These give you more lives", px, py);
+  text("These give you more lives", px + 60, py + 35);
   /*
    //collecting points
    pushMatrix();
@@ -202,13 +201,13 @@ void startScreen()
   //draw rectangles for grass
   noStroke();
   fill(40, 196, 64);
-  rect(0, 0,  width * 0.15f, height);
+  rect(0, 0, width * 0.15f, height);
   rect(width, 0, - width * 0.15f, height);
   text("<----- If you hit these you're\nout of bounds and lose 1 life ----->", 
-  width - 375, height * 0.8f);
+  width - 375, height * 0.7f + 20);
 
   //how do i start
-  text("To START press SHIFT", width / 2, height - 200);
+  text("To START press SHIFT", width - 325, height - 100);
 }
 
 void endScreen()
@@ -220,5 +219,23 @@ void displayGameInfo()
   fill(255);
   rect(-2, -2, width + 5, height * 0.1f);
   //add text with details with user stats
+  fill(0);
+  stroke(0);
+  textSize(12);
+  text("Lives: " , 100, 30);
+  text("Collisions: " + colCount, 100, 50);
+  text("Points: ", 200, 30);
+}
+
+void livesCheck()
+{
+  for (int i = gameO.size () - 1; i >= 0; i --)
+  {
+    GameObject person = new Human();
+    if (((Human) person).lives == 0)
+    {
+      println("dead");
+    }
+  }
 }
 

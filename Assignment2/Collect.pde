@@ -16,6 +16,7 @@ class Collect extends GameObject implements Powerup
   void applyTo(Human person)
   {
     person.points++;
+    println("Col: " + person.points);
   }
 
   void render()

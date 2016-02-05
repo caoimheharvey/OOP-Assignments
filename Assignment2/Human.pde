@@ -1,6 +1,5 @@
 class Human extends GameObject
-{
-  int lives;
+{  int lives;
   int points;
   Human()
   {

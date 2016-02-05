@@ -26,7 +26,7 @@ class Collect extends GameObject implements Powerup
     translate(pos.x, pos.y);
     rotate(theta);
     float lastX = 0; 
-    float lastY = - 4;
+    float lastY = - 5;
     int sides = 5;
     float thetaInc = TWO_PI / sides;
     for (int i = 0; i <= sides; i ++)

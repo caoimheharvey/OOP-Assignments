@@ -9,19 +9,22 @@ Caoimhe Harvey
 void setup()
 {
   size(500, 700);
+
   z = 5;//counter for collisions
   Human person = new Human();
   gameO.add(person);
+
   speed = 1.0f;
-  c = color(27, 83, 132);
   bgap = 0.0f;
   toggled = true;
   endToggled = false;
+
+  background(startC);
 }
 
 boolean toggled; 
 boolean endToggled; 
-int c; //background color in draw
+int startC; //start background color in draw
 int x; 
 int colCount = 0; //counts the number of collisions
 int z; 
@@ -35,14 +38,9 @@ ArrayList<GameObject> gameO = new ArrayList<GameObject>();
 void draw()
 {
   //BACKGROUND CODE -------------------------------------------------------------------
-  //create lightning and darkening background of blue
-  background(c);
+  background(0, 100, 150);
 
   //MENU ------------------------------------------------------------------------------
-  //use bool to toggle game play until the end screen is displayed. 
-  //if toggled = true then display start screen until SHIFT is pressed
-  //when SHIFT is pressed set toggled to false then user plays game
-  //when users lives == 0 then display the end screen (use second bool)
   if (toggled)
   {
     startScreen();
@@ -58,8 +56,8 @@ void draw()
     }
   } else
   {
-
     //right side
+    noStroke();
     fill(40, 196, 64);
     rect(0, 0, bw, height);
     //left
@@ -95,9 +93,14 @@ void draw()
       GameObject go = gameO.get(i);
       go.update();
       go.render();
+
     } 
     displayGameInfo();
 
+    if (endToggled)
+    {
+      endScreen();
+    }
     //COLLISION RELATED CODE ---------------------------------------------------------
     checkCollision();
     checkBorders();
@@ -112,16 +115,6 @@ void draw()
         bgap += 0.05f;
       }
     }
-    /*
-    if(gameO.lives == 0)
-     {
-     endToggled = true;
-     }
-     */
-  }
-  if (endToggled)
-  {
-    endScreen();
   }
 }
 
@@ -142,11 +135,17 @@ void checkCollision()
           if (h.pos.dist(other.pos) < h.rad + other.rad)
           {
             if (other.pos.y > 510) {
+            } else if (h.pos.x < other.pos.x ) {
             } else
             {
               ((Powerup) other).applyTo((Human)h);
               gameO.remove(other);
               colCount++;
+              //TRYING TO CHECK IF LIVES ARE == 0
+              if(((Human) h).lives == 0)
+              {
+                endToggled =! endToggled;
+              }
             }
           }
         }
@@ -161,7 +160,7 @@ void checkBorders()
   GameObject pers = new Human();
   if (pers.pos.x < width * 0.1f || pers.pos.x > width - (width * 0.1f))
   { 
-   // println("OUT OF BOUNDS");
+    // println("OUT OF BOUNDS");
   } else 
   {
     //println("IN BOUNDS");
@@ -172,38 +171,70 @@ void startScreen()
 {
   //title
   textSize(32);
-  text("Dodge 'Em", width * 0.35f, height * 0.35f);
+  text("Dodge 'Em", width * 0.35f, 150);
   textSize(14);
 
   //who am i and how do i move
-  ellipse(width * 0.35f - 15, height * 0.5f, 20, 20);
-  text("This is you", width * 0.45f, height * 0.5f);
+  fill(255);
+  stroke(0);
+  ellipse(width * 0.35f - 15, 245, 20, 20);
+  fill(255);
+  stroke(255);
+  text("This is you", width * 0.45f, 250);
 
   //what do i dodge
-  rect(width * 0.3f - 10, height * 0.55f - 10, 40, 40 );
-  text("You avoid these", width * 0.45f, height * 0.55f + 20);
+  stroke(255, 0, 0);
+  fill(70);
+  rect(width * 0.3f - 10, 280, 40, 40 );
+  fill(255);
+  stroke(255);
+  text("You avoid these", width * 0.45f, 310);
 
   //lives
+  noStroke();
+  fill(255, 253, 93);
   float px = width * 0.3f;
-  float py = height * 0.6f;
+  float py = 340;
   pushMatrix();
   rect(px, py + 35, 20, 30);
   triangle(px - 15, py + 35, px + 10, py - 20  + 35, px + 35, py  +35);
   popMatrix(); 
-  text("These give you more lives", px + 60, py + 35);
-  /*
-   //collecting points
-   pushMatrix();
-   popMatrix(); 
-   text("These speed you up");
-   */
+  fill(255);
+  stroke(255);
+  text("These give you more lives", px + 60, 380);
+
+  //collecting points
+  fill(102, 255, 255);
+  stroke(102, 255, 255);
+  pushMatrix();
+  float lastX = px; 
+  float lastY = 450;
+  int sides = 5;
+  float thetaInc = TWO_PI / sides;
+  for (int i = 0; i <= sides; i ++)
+  {
+    float t = i * thetaInc;
+    float x = sin(t) * 20;
+    float y = -cos(t) * 20;
+    line(lastX, lastY, x, y);
+    lastX = x;
+    lastY = y;
+  }
+  popMatrix(); 
+
+  fill(255);
+  stroke(255);
+  text("Collect these to get points", px + 60, 450);
+
 
   //draw rectangles for grass
   noStroke();
   fill(40, 196, 64);
   rect(0, 0, width * 0.15f, height);
   rect(width, 0, - width * 0.15f, height);
-  text("<----- If you hit these you're\nout of bounds and lose 1 life ----->", 
+  fill(255);
+  stroke(255);
+  text("<----- If you hit these you're ----->\n      out of bounds and lose 1 life", 
   width - 375, height * 0.7f + 20);
 
   //how do i start
@@ -212,6 +243,7 @@ void startScreen()
 
 void endScreen()
 {
+  println("GAME OVER");
 }
 
 void displayGameInfo()
@@ -222,7 +254,7 @@ void displayGameInfo()
   fill(0);
   stroke(0);
   textSize(12);
-  text("Lives: " , 100, 30);
+  text("Lives: "  , 100, 30);
   text("Collisions: " + colCount, 100, 50);
   text("Points: ", 200, 30);
 }

@@ -7,6 +7,7 @@ abstract class GameObject
   PVector pos;
   int rad; 
 
+
   GameObject()
   {
   }

@@ -18,13 +18,10 @@ void setup()
   bgap = 0.0f;
   toggled = true;
   endToggled = false;
-
-  background(startC);
 }
 
 boolean toggled; 
 boolean endToggled; 
-int startC; //start background color in draw
 int x; 
 int colCount = 0; //counts the number of collisions
 int z; 
@@ -54,7 +51,7 @@ void draw()
         }
       }
     }
-  } else
+  } else if (endToggled == false)
   {
     //right side
     noStroke();
@@ -86,26 +83,18 @@ void draw()
         gameO.add(collection);
       }
     }
-
     //DISPLAYING THE GAME --------------------------------------------------------------
     for (int i = gameO.size () - 1; i >= 0; i--)
     {
       GameObject go = gameO.get(i);
       go.update();
       go.render();
-
     } 
-    displayGameInfo();
 
-    if (endToggled)
-    {
-      endScreen();
-    }
     //COLLISION RELATED CODE ---------------------------------------------------------
     checkCollision();
-    checkBorders();
-    livesCheck();
-    //incrementing border size
+
+      //incrementing border size
     if (colCount == z)
     {
       z += 10;
@@ -115,6 +104,10 @@ void draw()
         bgap += 0.05f;
       }
     }
+  }
+  if (endToggled)
+  {
+    endScreen();
   }
 }
 
@@ -141,8 +134,8 @@ void checkCollision()
               ((Powerup) other).applyTo((Human)h);
               gameO.remove(other);
               colCount++;
-              //TRYING TO CHECK IF LIVES ARE == 0
-              if(((Human) h).lives == 0)
+              //TO CHECK IF LIVES ARE == 0
+              if (((Human) h).lives == 0)
               {
                 endToggled =! endToggled;
               }
@@ -150,22 +143,15 @@ void checkCollision()
           }
         }
       }
+      //CODE TO CHECK BORDER COLLISION
+      if(h.pos.x > width - bw || h.pos.x < bw)
+      {
+        println("OUT OF BOUNDS");
+      }
     }
   }
 }
 
-//if human is outside of the boundaries and displays appropiate messages with appropiate action
-void checkBorders()
-{
-  GameObject pers = new Human();
-  if (pers.pos.x < width * 0.1f || pers.pos.x > width - (width * 0.1f))
-  { 
-    // println("OUT OF BOUNDS");
-  } else 
-  {
-    //println("IN BOUNDS");
-  }
-}
 
 void startScreen()
 {
@@ -243,31 +229,25 @@ void startScreen()
 
 void endScreen()
 {
-  println("GAME OVER");
-}
-
-void displayGameInfo()
-{
+  textSize(26);
   fill(255);
-  rect(-2, -2, width + 5, height * 0.1f);
-  //add text with details with user stats
-  fill(0);
-  stroke(0);
-  textSize(12);
-  text("Lives: "  , 100, 30);
-  text("Collisions: " + colCount, 100, 50);
-  text("Points: ", 200, 30);
+  stroke(255);
+  text("End Score: ", width * 0.35f, 150);
+  textSize(20);
+  text("Thanks for playing", 150, height / 2);
 }
 
-void livesCheck()
-{
-  for (int i = gameO.size () - 1; i >= 0; i --)
-  {
-    GameObject person = new Human();
-    if (((Human) person).lives == 0)
-    {
-      println("dead");
-    }
-  }
-}
+//void displayGameInfo()
+//{
+//  fill(255);
+//  rect(-2, -2, width + 5, height * 0.1f);
+//  //add text with details with user stats
+//  fill(0);
+//  stroke(0);
+//  textSize(12);
+//  text("Lives: " + .points, 100, 30);
+//  text("Collisions: " + colCount, 100, 50);
+//  text("Points: " + .lives, 200, 30);
+//}
+
 

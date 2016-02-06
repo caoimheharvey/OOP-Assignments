@@ -1,12 +1,13 @@
 abstract class GameObject
 {
   boolean continues = true; 
-  PVector forward; 
+  PVector forward;
+  
   //speed for obstacles
   float s;
+  
   PVector pos;
   int rad; 
-
 
   GameObject()
   {

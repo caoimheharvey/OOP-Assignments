@@ -1,5 +1,6 @@
 class Human extends GameObject
-{  int lives;
+{  
+  int lives;
   int points;
   Human()
   {
@@ -32,17 +33,19 @@ class Human extends GameObject
         }
       }//end key == coded
     }//end key pressed
-/*wraps around
+
+
+    //if human reaches the edge of the screen they are 
+    //returned to the starting point on the screen
     if (pos.x < 0)
     {
-      pos.x = width;
+      pos.x = width / 2;
     }
 
     if (pos.x > width)
     {
-      pos.x = 0;
+      pos.x = width / 2;
     }
-    */
   }//end update
 }
 

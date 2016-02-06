@@ -10,7 +10,7 @@ void setup()
 {
   size(500, 700);
 
-  z = 5;//counter for collisions
+  z = 5;//comparison counter for collisions
   Human person = new Human();
   gameO.add(person);
 
@@ -22,9 +22,8 @@ void setup()
 
 boolean toggled; 
 boolean endToggled; 
-int x; 
-int colCount = 0; //counts the number of collisions
-int z; 
+int colCount = 0; //counts the number of collisions which have occured
+int z;  //comparison counter for collisions
 float bgap; //border width
 float speed;
 float bw; 
@@ -65,7 +64,7 @@ void draw()
     //FOR EVERY 60 SECOND DISPLAY NEW OBJECT ----------------------------------------------
     if (frameCount % 60 == 0)
     {
-      switch((int) random(0, 5))
+      switch((int) random(0, 6))
       {
       case 0:
       case 1:
@@ -79,7 +78,8 @@ void draw()
         gameO.add(powerup);
         break;
       case 4: 
-        GameObject collection = new Collect((int) round(random(bw, width - bw)));
+      case 5:
+        GameObject collection = new Collect((int) round(random(bw, width - bw)), speed);
         gameO.add(collection);
       }
     }
@@ -90,11 +90,11 @@ void draw()
       go.update();
       go.render();
     } 
-
+    displayGameInfo();
     //COLLISION RELATED CODE ---------------------------------------------------------
     checkCollision();
 
-      //incrementing border size
+    //incrementing border size
     if (colCount == z)
     {
       z += 10;
@@ -128,7 +128,7 @@ void checkCollision()
           if (h.pos.dist(other.pos) < h.rad + other.rad)
           {
             if (other.pos.y > 510) {
-            } else if (h.pos.x < other.pos.x ) {
+            } else if (h.pos.x + 10 < other.pos.x ) {
             } else
             {
               ((Powerup) other).applyTo((Human)h);
@@ -144,9 +144,21 @@ void checkCollision()
         }
       }
       //CODE TO CHECK BORDER COLLISION
-      if(h.pos.x > width - bw || h.pos.x < bw)
+      if (h.pos.x > width - bw || h.pos.x < bw)
       {
-        println("OUT OF BOUNDS");
+        textSize(42);
+        fill(255, 0, 0);
+        text("OUT OF BOUNDS", 90, height / 2);
+
+        //removing a life each second spent out of bounds
+        if (frameCount % 60 == 0)
+        {
+          ((Human) h).lives --;
+          if (((Human) h).lives == 0)
+          {
+            endToggled =! endToggled;
+          }
+        }
       }
     }
   }
@@ -227,27 +239,42 @@ void startScreen()
   text("To START press SHIFT", width - 325, height - 100);
 }
 
+//-------- In the lines below ----------------------------------------------------------------
+// I am aware there is probably a better way than repeating the for loop in both 
+// methods, however, I was unable to figure one out in the time given
 void endScreen()
 {
-  textSize(26);
-  fill(255);
-  stroke(255);
-  text("End Score: ", width * 0.35f, 150);
-  textSize(20);
-  text("Thanks for playing", 150, height / 2);
+  for (int i = gameO.size () - 1; i >= 0; i --)
+  {
+    GameObject h = gameO.get(i);
+    if (h instanceof Human)
+    {
+      textSize(26);
+      fill(255);
+      stroke(255);
+      text("End Score: " + ((Human) h).points, width * 0.35f, 150);
+      textSize(20);
+      text("Thanks for playing", 150, height / 2);
+    }
+  }
 }
 
-//void displayGameInfo()
-//{
-//  fill(255);
-//  rect(-2, -2, width + 5, height * 0.1f);
-//  //add text with details with user stats
-//  fill(0);
-//  stroke(0);
-//  textSize(12);
-//  text("Lives: " + .points, 100, 30);
-//  text("Collisions: " + colCount, 100, 50);
-//  text("Points: " + .lives, 200, 30);
-//}
-
-
+void displayGameInfo()
+{
+  for (int i = gameO.size () - 1; i >= 0; i --)
+  {
+    GameObject h = gameO.get(i);
+    if (h instanceof Human)
+    {
+      fill(255);
+      rect(-2, -2, width + 5, height * 0.1f);
+      //add text with details with user stats
+      fill(0);
+      stroke(0);
+      textSize(12);
+      text("Points: " + ((Human) h).points, 100, 30);
+      text("Collisions: " + colCount, 100, 50);
+      text("Lives: " + ((Human) h).lives, 200, 30);
+    }
+  }
+}

@@ -4,10 +4,12 @@ class Collect extends GameObject implements Powerup
   float thetaInc; 
   float thetaDir;
 
-  Collect(int x)
+  Collect(int x, float s)
   {
+    this.s = s;
+    s = 2.0f; 
     pos = new PVector(x, -15);
-    forward = new PVector(0, 2);
+    forward = new PVector(0, s);
     thetaDir = random(-0.2f, 0.2f);
     theta = 0.0f;
     rad = 20;
@@ -16,7 +18,6 @@ class Collect extends GameObject implements Powerup
   void applyTo(Human person)
   {
     person.points++;
-    println("Col: " + person.points);
   }
 
   void render()

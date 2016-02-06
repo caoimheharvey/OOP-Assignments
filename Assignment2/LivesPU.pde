@@ -9,8 +9,10 @@ class LivesPU extends GameObject implements Powerup
 
   void applyTo(Human person)
   {
-    person.lives ++;
-    println(person.lives);
+    if (person.lives <= 9)
+    {
+      person.lives ++;
+    }
   }
 
   void render()

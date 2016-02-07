@@ -1,10 +1,10 @@
 class LivesPU extends GameObject implements Powerup
 {
-  LivesPU(int x)
+  LivesPU(int x, int y)
   {
-    pos = new PVector(x, -15);
+    pos = new PVector(x, y);
     rad = 20;
-    forward = new PVector(0, 3);
+    forward = new PVector(0, 3.0f);
   }
 
   void applyTo(Human person)

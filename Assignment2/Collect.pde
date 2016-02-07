@@ -4,11 +4,11 @@ class Collect extends GameObject implements Powerup
   float thetaInc; 
   float thetaDir;
 
-  Collect(int x, float s)
+  Collect(int x, int y, float s)
   {
     this.s = s;
     s = 2.0f; 
-    pos = new PVector(x, -15);
+    pos = new PVector(x, y);
     forward = new PVector(0, s);
     thetaDir = random(-0.2f, 0.2f);
     theta = 0.0f;
@@ -22,7 +22,7 @@ class Collect extends GameObject implements Powerup
 
   void render()
   {
-    stroke(102,255,255);
+    stroke(102, 255, 255);
     pushMatrix();
     translate(pos.x, pos.y);
     rotate(theta);

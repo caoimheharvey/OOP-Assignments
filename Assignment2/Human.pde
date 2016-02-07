@@ -2,19 +2,26 @@ class Human extends GameObject
 {  
   int lives;
   int points;
-  Human()
+  
+  Human(int x, int y)
   {
-    pos = new PVector(260, 500);
+    pos = new PVector(x, y);
     lives = 5;
     rad = 20;
     points = 0;
+    obc = 0;
   }
 
   void render()
   {    
-    stroke(0);
+    noStroke();
     fill(255);
     ellipse(pos.x, pos.y, rad, rad);
+    //failed attempt to make object 3D
+//    lights();
+//    translate(pos.x, pos.y, 0);
+//    sphereDetail(10);
+//    sphere(rad);
   }
 
   void update()

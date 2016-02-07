@@ -2,11 +2,11 @@ class Obstacles extends GameObject implements Powerup
 {
   int w;
 
-  Obstacles(int x, int w, float s)
+  Obstacles(int x, int y ,int w, float s)
   {
     this.w = w;
     rad = w;
-    pos = new PVector(x, -15);
+    pos = new PVector(x, y);
     forward = new PVector(0, s);
   }
 

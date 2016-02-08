@@ -1,15 +1,22 @@
 /*
-Caoimhe Harvey
+ Caoimhe Harvey
  C14724965
  OOP-Assignment 2
  DT282-2
- */
+*/
 
+import ddf.minim.*;
+
+Minim minim;
 
 void setup()
 {
   size(500, 700);
   // size(500, 700, P3D); --- part of a failed attempt to make Human object 3D
+
+  //sound
+  minim = new Minim(this);
+  
   z = 5;//comparison counter for collisions
   Human person = new Human(260, 500);
   gameO.add(person);
@@ -73,7 +80,7 @@ void draw()
       case 1:
       case 2:
         Obstacles obstacle = new Obstacles((int) round(random(bw, width - bw - 70)), 
-        - 15, (int) round(random(20, 70)), speed);
+          - 15, (int) round(random(20, 70)), speed);
         gameO.add(obstacle);
         break;
       case 3:
@@ -82,7 +89,7 @@ void draw()
         break;
       case 4: 
       case 5:
-        GameObject collection = new Collect((int) round(random(bw, width - bw)), - 15, speed);
+        GameObject collection = new Collect((int) round(random(bw, width - bw)), - 15, random(1.0f, 4.0f));
         gameO.add(collection);
       }
     }
@@ -131,15 +138,18 @@ void checkCollision()
           if (h.pos.dist(other.pos) < h.rad + other.rad)
           {
             if (other.pos.y > 510) {
-            } else if (h.pos.x + 10 < other.pos.x ) {
+            } else if (h.pos.x < other.pos.x - 30) {
             } else
             {
               ((Powerup) other).applyTo((Human)h);
+              //gameO.play();
               gameO.remove(other);
               colCount++;
+              //----PLAY COLLISION NOISE
               //TO CHECK IF LIVES ARE == 0
               if (((Human) h).lives == 0)
               {
+                //----PLAY DEATH NOISE
                 endToggled =! endToggled;
               }
             }
@@ -152,7 +162,7 @@ void checkCollision()
         textSize(42);
         fill(255, 0, 0);
         text("OUT OF BOUNDS", 90, height / 2);
-        
+
         //removing a life each half second spent out of bounds
         if (frameCount % 30 == 0)
         {
@@ -161,11 +171,11 @@ void checkCollision()
           {
             endToggled =! endToggled;
           }
-          //seconds spent out of bounds
-          if(frameCount % 60 == 0)
-          {
-            obc++;
-          }
+        }
+        //seconds spent out of bounds
+        if (frameCount % 60 == 0)
+        {
+          obc++;
         }
       }
     }
@@ -217,7 +227,7 @@ void startScreen()
   fill(255);
   stroke(255);
   text("<----- If you hit these you're ----->\nout of bounds and lose 1 life ever half\n      second for which you are out", 
-  width - 375, height * 0.7f + 20);
+    width - 375, height * 0.7f + 20);
 
   //how do i start
   text("To START press SHIFT", width - 325, height - 100);
@@ -240,7 +250,7 @@ void endScreen()
       text("End Score: " + ((Human) h).points, width * 0.35f, 150);
       textSize(20);
       text("Total Collisions: " + colCount, 160, 230);
-      text("Seconds spent OUT OF BOUNDS: " + obc, 70, 270);
+      text("Seconds spent OUT OF BOUNDS: " + obc + "s", 70, 270);
       text("Thanks for playing", 150, height / 2);
     }
   }
@@ -265,4 +275,3 @@ void displayGameInfo()
     }
   }
 }
-

@@ -1,7 +1,10 @@
 class LivesPU extends GameObject implements Powerup
 {
+  AudioPlayer audio;
+
   LivesPU(int x, int y)
   {
+    audio = minim.loadFile("swoosh.wav");
     pos = new PVector(x, y);
     rad = 20;
     forward = new PVector(0, 3.0f);
@@ -29,5 +32,10 @@ class LivesPU extends GameObject implements Powerup
   {
     pos.add(forward);
   }
-}
 
+  void play()
+  {
+    audio.rewind();
+    audio.play();
+  }
+}

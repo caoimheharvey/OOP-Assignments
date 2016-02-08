@@ -2,7 +2,7 @@ class Human extends GameObject
 {  
   int lives;
   int points;
-  
+
   Human(int x, int y)
   {
     pos = new PVector(x, y);
@@ -18,10 +18,10 @@ class Human extends GameObject
     fill(255);
     ellipse(pos.x, pos.y, rad, rad);
     //failed attempt to make object 3D
-//    lights();
-//    translate(pos.x, pos.y, 0);
-//    sphereDetail(10);
-//    sphere(rad);
+    //    lights();
+    //    translate(pos.x, pos.y, 0);
+    //    sphereDetail(10);
+    //    sphere(rad);
   }
 
   void update()
@@ -55,4 +55,3 @@ class Human extends GameObject
     }
   }//end update
 }
-

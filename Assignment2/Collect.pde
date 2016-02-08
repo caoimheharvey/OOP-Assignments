@@ -7,7 +7,6 @@ class Collect extends GameObject implements Powerup
   Collect(int x, int y, float s)
   {
     this.s = s;
-    s = 2.0f; 
     pos = new PVector(x, y);
     forward = new PVector(0, s);
     thetaDir = random(-0.2f, 0.2f);
@@ -48,4 +47,3 @@ class Collect extends GameObject implements Powerup
     pos.add(forward);
   }
 }
-

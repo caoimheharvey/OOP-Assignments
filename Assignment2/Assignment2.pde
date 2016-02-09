@@ -3,20 +3,24 @@
  C14724965
  OOP-Assignment 2
  DT282-2
-*/
+ */
 
-import ddf.minim.*;
+import processing.sound.*;
 
-Minim minim;
+SoundFile outofbounds;
+SoundFile collision;
+SoundFile end;
+
 
 void setup()
 {
   size(500, 700);
-  // size(500, 700, P3D); --- part of a failed attempt to make Human object 3D
 
   //sound
-  minim = new Minim(this);
-  
+  outofbounds = new SoundFile(this, "error.wav");
+  collision = new SoundFile(this, "swoosh.wav");
+  end = new SoundFile(this, "buzzer.wav");
+
   z = 5;//comparison counter for collisions
   Human person = new Human(260, 500);
   gameO.add(person);
@@ -27,6 +31,7 @@ void setup()
   endToggled = false;
   obc = 0;
 }
+
 // BOOLEANS TO JUMP BETWEEN WINDOWS IN MENU  
 boolean toggled; 
 boolean endToggled; 
@@ -146,10 +151,13 @@ void checkCollision()
               gameO.remove(other);
               colCount++;
               //----PLAY COLLISION NOISE
+              collision.play();
+              collision.amp(1);
+              
               //TO CHECK IF LIVES ARE == 0
               if (((Human) h).lives == 0)
               {
-                //----PLAY DEATH NOISE
+                end.play();
                 endToggled =! endToggled;
               }
             }
@@ -166,9 +174,12 @@ void checkCollision()
         //removing a life each half second spent out of bounds
         if (frameCount % 30 == 0)
         {
+          outofbounds.play();
+          outofbounds.amp(-0.5);
           ((Human) h).lives --;
           if (((Human) h).lives == 0)
           {
+            end.play();
             endToggled =! endToggled;
           }
         }
@@ -230,7 +241,7 @@ void startScreen()
     width - 375, height * 0.7f + 20);
 
   //how do i start
-  text("To START press SHIFT", width - 325, height - 100);
+  text("To start press SHIFT", width - 325, height - 100);
 }
 
 //-------- In the lines below --------------------------------------------------------------------------------------

@@ -10,16 +10,17 @@ import processing.sound.*;
 SoundFile outofbounds;
 SoundFile collision;
 SoundFile end;
-
+SoundFile obst;
 
 void setup()
 {
   size(500, 700);
 
-  //sound
+  //SOUND EFFECTS  -------------------------------------------------------------------
   outofbounds = new SoundFile(this, "error.wav");
   collision = new SoundFile(this, "swoosh.wav");
   end = new SoundFile(this, "buzzer.wav");
+  obst = new SoundFile(this, "beep.wav");
 
   z = 5;//comparison counter for collisions
   Human person = new Human(260, 500);
@@ -32,17 +33,26 @@ void setup()
   obc = 0;
 }
 
-// BOOLEANS TO JUMP BETWEEN WINDOWS IN MENU  
+// GLOBAL VARIABLES -------------------------------------------------------------------
+//Used to jump between screens 
 boolean toggled; 
 boolean endToggled; 
-int colCount = 0; //counts the number of collisions which have occured
+
+//Counters for collisions
+int colCount = 0; 
 int z;  //comparison counter for collisions
-float bgap; //border width
-float speed;
-float bw; 
-//out of borders counter
+
+//Border related fields
+float bgap; //percentage by which it increases each time
+float bw;  //border width
+
+//Out of Bounds Counter
 int obc; 
 
+//Speed of Falling Obstacles
+float speed;
+
+//ArrayList of all components under Game Object
 ArrayList<GameObject> gameO = new ArrayList<GameObject>();
 
 
@@ -67,14 +77,12 @@ void draw()
     }
   } else if (endToggled == false)
   {
-    //right side
+    // CREATING GRASS BORDERS ------------------------------------------------------------
+    bw = width * bgap;
     noStroke();
     fill(40, 196, 64);
     rect(0, 0, bw, height);
-    //left
     rect(width, 0, - bw, height);
-
-    bw = width * bgap;
 
     //FOR EVERY 60 SECOND DISPLAY NEW OBJECT ----------------------------------------------
     if (frameCount % 60 == 0)
@@ -106,6 +114,7 @@ void draw()
       go.render();
     } 
     displayGameInfo();
+
     //COLLISION RELATED CODE ---------------------------------------------------------
     checkCollision();
 
@@ -147,18 +156,19 @@ void checkCollision()
             } else
             {
               ((Powerup) other).applyTo((Human)h);
-              //gameO.play();
-              gameO.remove(other);
               colCount++;
-              //----PLAY COLLISION NOISE
-              collision.play();
-              collision.amp(1);
-              
-              //TO CHECK IF LIVES ARE == 0
-              if (((Human) h).lives == 0)
+              gameO.remove(other);
+
+              if (other instanceof Obstacles)
               {
-                end.play();
-                endToggled =! endToggled;
+                //PLAY COLLISION NOISE
+                obst.amp(-0.7);
+                obst.play();
+              } else
+              {
+                //PLAY COLLISION NOISE
+                collision.play();
+                collision.amp(1);
               }
             }
           }
@@ -177,17 +187,18 @@ void checkCollision()
           outofbounds.play();
           outofbounds.amp(-0.5);
           ((Human) h).lives --;
-          if (((Human) h).lives == 0)
-          {
-            end.play();
-            endToggled =! endToggled;
-          }
         }
         //seconds spent out of bounds
         if (frameCount % 60 == 0)
         {
           obc++;
         }
+      }
+      //TO CHECK IF HUMAN IS STILL ALIVE OR NOT
+      if (((Human) h).lives == 0)
+      {
+        end.play();
+        endToggled =! endToggled;
       }
     }
   }
@@ -202,33 +213,36 @@ void startScreen()
   textSize(14);
 
   //who am i and how do i move
-  Human you = new Human(160, 245);
+  Human you = new Human(160, 215);
   you.render();
   fill(255);
   stroke(255);
-  text("This is you", width * 0.45f, 250);
+  text("This is you", width * 0.45f, 215);
 
   //what do i dodge
-  Obstacles dodge = new Obstacles(140, 280, 40, 0);
+  Obstacles dodge = new Obstacles(140, 250, 40, 0);
   dodge.render();
   fill(255);
   stroke(255);
-  text("You avoid these", width * 0.45f, 310);
+  text("You avoid these", width * 0.45f, 280);
 
   //lives
-  LivesPU livespowerup = new LivesPU(150, 365);
+  LivesPU livespowerup = new LivesPU(150, 325);
   livespowerup.render();
   fill(255);
   stroke(255);
-  text("These give you more lives", 200, 380);
+  text("These give you more lives", 200, 340);
 
   //collecting points
-  Collect colpoints = new Collect(160, 450, 0.0f);
+  Collect colpoints = new Collect(160, 400, 0.0f);
   colpoints.render();
   fill(255);
   stroke(255);
-  text("Collect these to get points", 200, 450);
+  text("Collect these to get points", 200, 400);
 
+
+  //moving 
+  text("<  To move use the L and R arrow keys  >", 110, 460);
 
   //draw rectangles for grass
   noStroke();
@@ -244,9 +258,6 @@ void startScreen()
   text("To start press SHIFT", width - 325, height - 100);
 }
 
-//-------- In the lines below --------------------------------------------------------------------------------------
-// I am aware there is a better way than repeating the for loop in both 
-// methods, however, I was unable to figure one out in for the given deadline
 void endScreen()
 {
   background(138, 0, 0);
@@ -262,7 +273,26 @@ void endScreen()
       textSize(20);
       text("Total Collisions: " + colCount, 160, 230);
       text("Seconds spent OUT OF BOUNDS: " + obc + "s", 70, 270);
-      text("Thanks for playing", 150, height / 2);
+      text("If you wish to play again press the UP arrow", 35, 330);
+      text("Thanks for playing", 150, height - 200);
+
+      if (keyPressed)
+      {
+        if (key == CODED)
+        {
+          if (keyCode == UP) 
+          {
+            endToggled = !endToggled;
+            toggled =! toggled;
+            ((Human) h).lives = 5;
+            ((Human) h).points = 0;
+            colCount = 0;
+            z = 5; 
+            bgap = 0.0f;
+            speed = 1.0f;
+          }
+        }
+      }
     }
   }
 }

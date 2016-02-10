@@ -1,7 +1,7 @@
 # OOP-Assignments
 Mix of all assignments done in Object Oriented Programming in Year 2 of Computer Science International.
 
-First assignment: 
+First assignment: https://github.com/caoimheharvey/Assignment1.git 
 
 Second assignment: 
 This game consists of dogding falling objects. 

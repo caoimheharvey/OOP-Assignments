@@ -168,7 +168,7 @@ void checkCollision()
               {
                 //PLAY COLLISION NOISE
                 collision.play();
-                collision.amp(1);
+                collision.amp(1.5);
               }
             }
           }
@@ -275,7 +275,8 @@ void endScreen()
       text("Seconds spent OUT OF BOUNDS: " + obc + "s", 70, 270);
       text("If you wish to play again press the UP arrow", 35, 330);
       text("Thanks for playing", 150, height - 200);
-
+  
+    //PLAYING AGAIN
       if (keyPressed)
       {
         if (key == CODED)
@@ -306,7 +307,7 @@ void displayGameInfo()
     {
       fill(255);
       rect(-2, -2, width + 5, height * 0.1f);
-      //add text with details with user stats
+      //text with details of user stats
       fill(0);
       stroke(0);
       textSize(20);

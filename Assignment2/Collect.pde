@@ -1,4 +1,4 @@
-class Collect extends GameObject implements Powerup
+class Collect extends GameObject implements FallingObjects
 {
   float theta; 
   float thetaInc; 

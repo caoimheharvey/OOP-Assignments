@@ -1,4 +1,4 @@
-class Obstacles extends GameObject implements Powerup
+class Obstacles extends GameObject implements FallingObjects
 {
   int w;
 
@@ -30,4 +30,3 @@ class Obstacles extends GameObject implements Powerup
     pos.add(forward);
   }
 }
-

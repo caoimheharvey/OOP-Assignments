@@ -1,4 +1,4 @@
-interface Powerup
+interface FallingObjects
 {
   void applyTo(Human person);
 }

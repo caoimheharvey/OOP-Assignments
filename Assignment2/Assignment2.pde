@@ -40,6 +40,7 @@ boolean endToggled;
 
 //Counters for collisions
 int colCount = 0; 
+int pucount = 0; //counter for non-obstacle powerup collisions
 int z;  //comparison counter for collisions
 
 //Border related fields
@@ -117,9 +118,10 @@ void draw()
 
     //COLLISION RELATED CODE ---------------------------------------------------------
     checkCollision();
-
+    
+    //for every 10 powerups collected the border gets bigger
     //incrementing border size
-    if (colCount == z)
+    if (pucount == z)
     {
       z += 10;
       speed += 0.5f;
@@ -147,7 +149,7 @@ void checkCollision()
       for (int j = gameO.size () - 1; j >= 0; j --)
       {
         GameObject other = gameO.get(j);
-        if (other instanceof Powerup) 
+        if (other instanceof FallingObjects) 
         {
           if (h.pos.dist(other.pos) < h.rad + other.rad)
           {
@@ -155,7 +157,7 @@ void checkCollision()
             } else if (h.pos.x < other.pos.x - 30) {
             } else
             {
-              ((Powerup) other).applyTo((Human)h);
+              ((FallingObjects) other).applyTo((Human)h);
               colCount++;
               gameO.remove(other);
 
@@ -169,6 +171,7 @@ void checkCollision()
                 //PLAY COLLISION NOISE
                 collision.play();
                 collision.amp(1.5);
+                pucount++;
               }
             }
           }

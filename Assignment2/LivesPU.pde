@@ -1,4 +1,4 @@
-class LivesPU extends GameObject implements Powerup
+class LivesPU extends GameObject implements FallingObjects
 {
 
   LivesPU(int x, int y)

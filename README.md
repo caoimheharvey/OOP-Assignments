@@ -1,4 +1,8 @@
 # OOP-Assignments
+
+NOTE: All programs were written on Macintosh X El Capitan and in Processing 3. 
+
+
 Mix of all assignments done in Object Oriented Programming in Year 2 of Computer Science International.
 
 First assignment: https://github.com/caoimheharvey/Assignment1.git 
